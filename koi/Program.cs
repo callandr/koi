@@ -1,3 +1,4 @@
+using Imageflow.Fluent;
 using Imageflow.Server;
 using Imageflow.Server.DiskCache;
 using koi.Services;
@@ -33,17 +34,16 @@ namespace koi
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            var ifoptions = new ImageflowMiddlewareOptions()
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                ////app.UseHsts();
-            }
+                JobSecurityOptions = new SecurityOptions()
+                {
+                    MaxFrameSize = new FrameSizeLimit(12900, 12900, 201)
+                }
+            }.SetMapWebRoot(true)
+            .SetMyOpenSourceProjectUrl("https://github.com/callandr/koi");
 
-            app.UseImageflow(new ImageflowMiddlewareOptions()
-                .SetMapWebRoot(true)
-                .SetMyOpenSourceProjectUrl("https://github.com/callandr/koi"));
+            app.UseImageflow(ifoptions);
 
             app.UseRouting();
 
