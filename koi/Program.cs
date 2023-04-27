@@ -2,7 +2,7 @@ using Azure.Storage.Blobs;
 using Imageflow.Server;
 using Imageflow.Server.DiskCache;
 using Imageflow.Server.Storage.AzureBlob;
-using Imazen.DiskCache.Cleanup;
+using koi.Services;
 
 namespace koi
 {
@@ -19,11 +19,13 @@ namespace koi
             string azureKey = builder.Configuration.GetValue<string>(nameof(azureKey)) ?? string.Empty;
             string connectionString = "DefaultEndpointsProtocol=http;AccountName=" + azureAccount + ";AccountKey=" + azureKey + ";EndpointSuffix=core.windows.net";
 
-            builder.Services.AddImageflowAzureBlobService(
-                new AzureBlobServiceOptions(
-                        connectionString,
-                        new BlobClientOptions())
-                    .MapPrefix("/u", "u62"));
+            ////var options = new AzureBlobServiceOptions(
+            ////            connectionString,
+            ////            new BlobClientOptions()).MapPrefix("", "");
+
+            ////builder.Services.AddImageflowAzureBlobService(options);
+            var options = new CustomBlobServiceOptions(connectionString);
+            builder.Services.AddImageflowCustomBlobService(options);
 
             builder.Services.AddImageflowDiskCache(
                 new DiskCacheOptions("Cache")
@@ -47,14 +49,14 @@ namespace koi
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    context.Response.ContentType = "text/html";
-                    await context.Response.WriteAsync("<img src=\"vegme.jpg?width=420\" />");
-                });
-            });
+            ////app.UseEndpoints(endpoints =>
+            ////{
+            ////    endpoints.MapGet("/", async context =>
+            ////    {
+            ////        context.Response.ContentType = "text/html";
+            ////        await context.Response.WriteAsync("<img src=\"vegme.jpg?width=420\" />");
+            ////    });
+            ////});
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
