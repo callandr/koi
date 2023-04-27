@@ -1,4 +1,6 @@
+using Azure.Storage.Blobs;
 using Imageflow.Server;
+using Imageflow.Server.Storage.AzureBlob;
 
 namespace koi
 {
@@ -8,8 +10,18 @@ namespace koi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Add services to the container
             builder.Services.AddControllersWithViews();
+
+            string azureAccount = builder.Configuration.GetValue<string>(nameof(azureAccount)) ?? string.Empty;
+            string azureKey = builder.Configuration.GetValue<string>(nameof(azureKey)) ?? string.Empty;
+            string connectionString = "DefaultEndpointsProtocol=http;AccountName=" + azureAccount + ";AccountKey=" + azureKey + ";EndpointSuffix=core.windows.net";
+
+            builder.Services.AddImageflowAzureBlobService(
+                new AzureBlobServiceOptions(
+                        connectionString,
+                        new BlobClientOptions())
+                    .MapPrefix("/u", "u62"));
 
             var app = builder.Build();
 
