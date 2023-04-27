@@ -1,6 +1,8 @@
 using Azure.Storage.Blobs;
 using Imageflow.Server;
+using Imageflow.Server.DiskCache;
 using Imageflow.Server.Storage.AzureBlob;
+using Imazen.DiskCache.Cleanup;
 
 namespace koi
 {
@@ -22,6 +24,12 @@ namespace koi
                         connectionString,
                         new BlobClientOptions())
                     .MapPrefix("/u", "u62"));
+
+            builder.Services.AddImageflowDiskCache(
+                new DiskCacheOptions("Cache")
+                {
+                    AutoClean = true
+                });
 
             var app = builder.Build();
 
