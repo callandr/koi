@@ -11,7 +11,6 @@ namespace koi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container
             builder.Services.AddControllersWithViews();
 
             string azureAccount = builder.Configuration.GetValue<string>(nameof(azureAccount)) ?? string.Empty;
@@ -22,7 +21,6 @@ namespace koi
             ////            connectionString,
             ////            new BlobClientOptions()).MapPrefix("", "");
 
-            ////builder.Services.AddImageflowAzureBlobService(options);
             var options = new CustomBlobServiceOptions(connectionString);
             builder.Services.AddImageflowCustomBlobService(options);
 

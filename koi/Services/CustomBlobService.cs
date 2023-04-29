@@ -49,8 +49,6 @@
         public Func<string, string, Tuple<string, string>> ContainerKeyFilterFunction { get; set; }
             = Tuple.Create;
 
-        public bool IgnorePrefixCase { get; set; } = true;
-
         public const string Prefix = "/b/";
     }
 
@@ -71,8 +69,9 @@
         }
 
         public bool SupportsPath(string virtualPath)
-            => virtualPath.StartsWith(CustomBlobServiceOptions.Prefix,
-                options.IgnorePrefixCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal);
+        {
+            return virtualPath.StartsWith(CustomBlobServiceOptions.Prefix);
+        }
 
         public async Task<IBlobData> Fetch(string virtualPath)
         {
@@ -109,7 +108,7 @@
             {
                 if (e.Status == 404)
                 {
-                    throw new BlobMissingException($"Azure blob \"{blobKey}\" not found.", e);
+                    throw new BlobMissingException($"Azure blob not found.", e);
                 }
 
                 throw;
