@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Imageflow.Server" Version="0.7.9" />
-    <PackageReference Include="Imageflow.Server.DiskCache" Version="0.7.9" />
-    <PackageReference Include="Imageflow.Server.Storage.AzureBlob" Version="0.7.9" />
+    <PackageReference Include="Imageflow.Server" Version="0.8.1" />
+    <PackageReference Include="Imageflow.Server.DiskCache" Version="0.8.1" />
+    <PackageReference Include="Imageflow.Server.Storage.AzureBlob" Version="0.8.1" />
   </ItemGroup>
 
   <ItemGroup>
