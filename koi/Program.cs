@@ -17,10 +17,6 @@ namespace koi
             string azureKey = builder.Configuration.GetValue<string>(nameof(azureKey)) ?? string.Empty;
             string connectionString = "DefaultEndpointsProtocol=http;AccountName=" + azureAccount + ";AccountKey=" + azureKey + ";EndpointSuffix=core.windows.net";
 
-            ////var options = new AzureBlobServiceOptions(
-            ////            connectionString,
-            ////            new BlobClientOptions()).MapPrefix("", "");
-
             var options = new CustomBlobServiceOptions(connectionString);
             builder.Services.AddImageflowCustomBlobService(options);
 
