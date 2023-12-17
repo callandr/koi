@@ -24,22 +24,15 @@
         }
     }
 
-    public class CustomBlobServiceOptions
+    public class CustomBlobServiceOptions(string connectionString)
     {
-        private readonly string connectionString = string.Empty;
-
-        public CustomBlobServiceOptions(string connectionString)
-        {
-            this.connectionString = connectionString;
-        }
-
         public BlobClientOptions BlobClientOptions { get; set; } = new BlobClientOptions();
 
         public string ConnectionString
         {
             get
             {
-                return this.connectionString;
+                return connectionString;
             }
         }
 
@@ -82,7 +75,10 @@
 
             var path = virtualPath[CustomBlobServiceOptions.Prefix.Length..].TrimStart('/');
             var indexOfSlash = path.IndexOf('/');
-            if (indexOfSlash < 1) return null;
+            if (indexOfSlash < 1)
+            {
+                return null;
+            }
 
             var container = path[..indexOfSlash];
             var blobKey = path[(indexOfSlash + 1)..];
