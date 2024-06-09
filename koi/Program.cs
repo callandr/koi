@@ -1,6 +1,6 @@
 using Imageflow.Fluent;
 using Imageflow.Server;
-using Imageflow.Server.DiskCache;
+using Imageflow.Server.HybridCache;
 using koi.Services;
 
 namespace koi
@@ -20,11 +20,10 @@ namespace koi
             var options = new CustomBlobServiceOptions(connectionString);
             builder.Services.AddImageflowCustomBlobService(options);
 
-            builder.Services.AddImageflowDiskCache(
-                new DiskCacheOptions("Cache")
-                {
-                    AutoClean = true
-                });
+            builder.Services.AddImageflowHybridCache(new HybridCacheOptions("C:\\imgresizercache\\")
+            {
+                CacheSizeLimitInBytes = 1173741800L,
+            });
 
             var app = builder.Build();
 
