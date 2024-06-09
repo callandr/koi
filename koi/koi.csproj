@@ -12,8 +12,4 @@
     <PackageReference Include="Imageflow.Server.Storage.AzureBlob" Version="0.8.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Cache\" />
-  </ItemGroup>
-
 </Project>
