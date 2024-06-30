@@ -32,7 +32,7 @@ namespace koi
                 JobSecurityOptions = new SecurityOptions()
                 {
                     MaxFrameSize = new FrameSizeLimit(17400, 15100, 225)
-                }
+                },
             }.SetMapWebRoot(true)
             .SetMyOpenSourceProjectUrl("https://github.com/callandr/koi");
 

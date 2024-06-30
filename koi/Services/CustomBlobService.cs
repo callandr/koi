@@ -84,7 +84,6 @@
             var blobKey = path[(indexOfSlash + 1)..];
 
             var filtered = options.ContainerKeyFilterFunction(container, blobKey);
-
             if (filtered == null)
             {
                 return null;
@@ -104,7 +103,7 @@
             {
                 if (e.Status == 404)
                 {
-                    throw new BlobMissingException($"Azure blob not found.", e);
+                    throw new BlobMissingException("Azure blob not found", e);
                 }
 
                 throw;
@@ -123,6 +122,7 @@
 
         public bool? Exists => true;
         public DateTime? LastModifiedDateUtc => response.Value.Details.LastModified.UtcDateTime;
+
         public Stream OpenRead()
         {
             return response.Value.Content;
